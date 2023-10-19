@@ -1,12 +1,6 @@
 """
 The script shows how to train Augmented SBERT (In-Domain) strategy for STSb dataset with BM25 sampling.
-We utlise easy and practical elasticsearch (https://www.elastic.co/) for BM25 sampling.
-
-Installations:
-For this example, elasticsearch to be installed (pip install elasticsearch)
-[NOTE] You need to also install ElasticSearch locally on your PC or desktop.
-link for download - https://www.elastic.co/downloads/elasticsearch
-Or to run it with Docker: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+We utlise easy and practical FastBM25 for BM25 sampling.
 
 Methodology:
 Three steps are followed for AugSBERT data-augmentation with BM25 Sampling - 
