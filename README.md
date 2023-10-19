@@ -1,4 +1,13 @@
 # Augmented SBERT
+## Background 
+Sentence-Transformer framework provides an easy method to compute dense vector representations for **sentences**, **paragraphs**, and **images**. The models are based on transformer networks like BERT / RoBERTa / XLM-RoBERTa etc. and achieve state-of-the-art performance in various tasks. Text is embedded in vector space such that similar text are closer and can efficiently be found using cosine similarity.
+
+The original paper of Sentence-BERT (SBERT) is **https://arxiv.org/abs/1908.10084**
+
+The original codebase of Sentence-Transformer is **https://github.com/UKPLab/sentence-transformers**
+
+For the full documentation of how to use Sentence-Transformer library, see **[www.SBERT.net](https://www.sbert.net)**.
+
 
 ## Motivation
 
@@ -28,7 +37,7 @@ We apply the Augmented SBERT (<b>In-domain</b>) strategy, it involves three step
 
  - Step 1:  Train a cross-encoder (BERT) over the small (gold or annotated) dataset
 
- - Step 2.1: Create pairs by recombination and reduce the pairs via BM25 or semantic search
+ - Step 2.1: Create pairs by recombination and reduce the pairs via BM25
 
  - Step 2.2: Weakly label new pairs with cross-encoder (BERT). These are silver pairs or (silver) dataset
 
@@ -51,24 +60,19 @@ We apply the Augmented SBERT (<b>Domain-Transfer</b>) strategy, it involves thre
 
 ## Training
  
-The [examples/training/data_augmentation](https://github.com/UKPLab/sentence-transformers/blob/master/examples/training/data_augmentation/) folder contains simple training examples for each scenario explained below:
+Training examples for each scenario explained below:
 
-- [train_sts_seed_optimization.py](train_sts_seed_optimization.py) 
-    - This script trains a bi-encoder (SBERT) model from scratch for STS benchmark dataset with seed-optimization. 
-    - Seed optimization technique is inspired from [(Dodge et al., 2020)](https://arxiv.org/abs/2002.06305). 
-    - For Seed opt., we train our bi-encoder for various seeds and evaluate using an early stopping algorithm. 
-    - Finally, measure dev performance across the seeds to get the highest performing seeds.
-
-- [train_sts_indomain_nlpaug.py](train_sts_indomain_nlpaug.py)
-    - This script trains a bi-encoder (SBERT) model from scratch for STS benchmark dataset using easy data augmentation. 
-    - Data augmentation strategies are used from popular [nlpaug](https://github.com/makcedward/nlpaug) package.
-    - Augment single sentences with synonyms using (word2vec, BERT or WordNet). Forms our silver dataset.
-    - Train bi-encoder model on both original small training dataset and synonym based silver dataset. 
+- [train_mrpc_indomain_bm25.py](train_mrpc_indomain_bm25.py)
+    - Script initially trains a cross-encoder (BERT) model from scratch for small mrpc dataset.
+    - Recombine sentences from our small training dataset and form lots of sentence-pairs.
+    - Limit number of combinations with BM25 sampling using [FastBM25](https://github.com/zhusleep/fastbm25).
+    - Retrieve top-k sentences given a sentence and label these pairs using the cross-encoder (silver dataset).
+    - Train a bi-encoder (SBERT) model on both gold + silver STSb dataset. (Augmented SBERT (In-domain) Strategy).
 
 - [train_sts_indomain_bm25.py](train_sts_indomain_bm25.py)
     - Script initially trains a cross-encoder (BERT) model from scratch for small STS benchmark dataset.
     - Recombine sentences from our small training dataset and form lots of sentence-pairs.
-    - Limit number of combinations with BM25 sampling using [ElasticSearch](https://www.elastic.co/).
+    - Limit number of combinations with BM25 sampling using [FastBM25](https://github.com/zhusleep/fastbm25).
     - Retrieve top-k sentences given a sentence and label these pairs using the cross-encoder (silver dataset).
     - Train a bi-encoder (SBERT) model on both gold + silver STSb dataset. (Augmented SBERT (In-domain) Strategy).
 
@@ -77,6 +81,9 @@ The [examples/training/data_augmentation](https://github.com/UKPLab/sentence-tra
     - Label the Quora Questions Pair (QQP) training dataset (Assume no labels present) using the cross-encoder.
     - Train a bi-encoder (SBERT) model on the QQP dataset. (Augmented SBERT (Domain-Transfer) Strategy).
 
+- [train_sts_qqp_indomain.py](train_sts_qqp_indomain.py)
+    - This script directly trains a bi-encoder (SBERT) model on the positive examples in QQP train dataset
+    - When trained with both positive and negative examples, results can get worse
 
 
 ## Citation
