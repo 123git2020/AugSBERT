@@ -9,5 +9,5 @@ Through cross_domain training, we get the result between "no_train" and "in_doma
 is needed in the "cross_domain" to achieve this improvement, increasing the data size does not give any improvement.
 
 <p align="center">
-    <img width="640" height="400" src="Figure_1.png" alt="qqp res" />
+    <img width="960" height="600" src="Figure_1.png" alt="qqp res" />
 </p>
