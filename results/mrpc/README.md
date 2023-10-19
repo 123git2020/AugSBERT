@@ -1,7 +1,7 @@
 # In-Domain Results on Microsoft Research Paraphrase Corpus (mrpc) Dataset
 
 F1 scores for binary classification are obtained through 4 different measurements.  
-"sbert": the bi-encoder model is only trained on original dataset .
+"sbert": the bi-encoder model is only trained on original dataset.  
 "Augsbert": the bi-encoder model is trained on augmented dataset.
 
 When the bi-encoder is trained with augmented dataset, it gets 0.5% improvement on all F1 measurements which is somehow negligible.    
