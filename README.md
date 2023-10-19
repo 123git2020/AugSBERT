@@ -72,13 +72,6 @@ The [examples/training/data_augmentation](https://github.com/UKPLab/sentence-tra
     - Retrieve top-k sentences given a sentence and label these pairs using the cross-encoder (silver dataset).
     - Train a bi-encoder (SBERT) model on both gold + silver STSb dataset. (Augmented SBERT (In-domain) Strategy).
 
-- [train_sts_indomain_semantic.py](train_sts_indomain_semantic.py)
-    - This script initially trains a cross-encoder (BERT) model from scratch for small STS benchmark dataset.
-    - We recombine sentences from our small training dataset and form lots of sentence-pairs.
-    - Limit number of combinations with Semantic Search sampling using pretrained SBERT model.
-    - Retrieve top-k sentences given a sentence and label these pairs using the cross-encoder (silver dataset).
-    - Train a bi-encoder (SBERT) model on both gold + silver STSb dataset. (Augmented SBERT (In-domain) Strategy).
-
 - [train_sts_qqp_crossdomain.py](train_sts_qqp_crossdomain.py)
     - This script initially trains a cross-encoder (BERT) model from scratch for STS benchmark dataset.
     - Label the Quora Questions Pair (QQP) training dataset (Assume no labels present) using the cross-encoder.
