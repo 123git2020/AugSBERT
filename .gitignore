@@ -2,7 +2,6 @@
 .vscode
 *.pyc
 *.gz
-*.tsv
 tmp_*.py
 /examples/**/output/*
 examples/datasets/*/
