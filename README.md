@@ -62,7 +62,7 @@ We apply the Augmented SBERT (<b>Domain-Transfer</b>) strategy, it involves thre
  
 Training examples for each scenario explained below:
 
-The strategy for bm25 sampling is different from the elasticsearch used in the original article.Elasticsearch may have timeout as well as other problems, and the code is not intuitive. New strategy is more efficient but maintains accuracy.
+The strategy for bm25 sampling is different from the elasticsearch used in the original article. Elasticsearch may have timeout as well as other problems, and the code is not intuitive. New strategy is more efficient but maintains accuracy.
 
 - [train_mrpc_indomain_bm25.py](train_mrpc_indomain_bm25.py)
     - Script initially trains a cross-encoder (BERT) model from scratch for small mrpc dataset.
