@@ -6,3 +6,5 @@ The folder of bi-encoder that only trains on gold samples.  <br>
 
 The data.tsv is the cleaned original mrpc data.
 
+When you want to retrain the model, please delete all the folders in this directory but not data.
+

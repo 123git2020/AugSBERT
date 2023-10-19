@@ -5,3 +5,5 @@ The folder of bi-encoder that trains on augmented data composed of gold and silv
 The folder of bi-encoder that only trains on gold samples.  <br>
 
 The data.tsv is the cleaned original stsb data.
+
+When you want to retrain the model, please delete all the folders in this directory but not data.

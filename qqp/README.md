@@ -7,3 +7,5 @@ The folder of cross-encoder that trains on stsb data and predict a certain fract
 The folder of bi-encoder that trains on the predicted qqp train data.<br>
 
 The classification folder contains the qqp data.
+
+When you want to retrain the model, please delete all the folders ***except classification***
