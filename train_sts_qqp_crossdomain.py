@@ -140,7 +140,7 @@ silver_data = []
 with open(os.path.join(qqp_dataset_path, "classification/train_pairs.tsv"), encoding='utf8') as fIn:
     reader = csv.DictReader(fIn, delimiter='\t', quoting=csv.QUOTE_NONE)
     for row in reader:
-            if random.random()<frac:
+            if random.random()<frac:                                              # 每条数据有frac的概率会被选中
                     silver_data.append([row['question1'], row['question2']])
 
 silver_scores = cross_encoder.predict(silver_data)
