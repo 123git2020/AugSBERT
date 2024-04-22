@@ -73,7 +73,7 @@ The strategy for bm25 sampling is different from the elasticsearch used in the o
 
 - [train_sts_indomain_bm25.py](train_sts_indomain_bm25.py)
     - Script initially trains a cross-encoder (BERT) model from scratch for small STS benchmark dataset.
-    - Recombine sentences from our small training dataset and form lots of sentence-pairs.
+    - Recombine sentences from our small training dataset to form lots of sentence-pairs.
     - Limit number of combinations with BM25 sampling using [FastBM25](https://github.com/zhusleep/fastbm25).
     - Retrieve top-k sentences given a sentence and label these pairs using the cross-encoder (silver dataset).
     - Train a bi-encoder (SBERT) model on both gold + silver STSb dataset. (Augmented SBERT (In-domain) Strategy).

@@ -59,6 +59,7 @@ bi_encoder_path = 'qqp/bi-encoder_cross_domain_'+model_name.replace("/", "-")
 
 logging.info("Loading cross-encoder model: {}".format(model_name))
 # Use Huggingface/transformers model (like BERT, RoBERTa, XLNet, XLM-R) for cross-encoder model
+# Initialize a BERT model
 cross_encoder = CrossEncoder(model_name, num_labels=1)
 
 ###### Bi-encoder (sentence-transformers) ######
@@ -74,6 +75,7 @@ pooling_model = models.Pooling(word_embedding_model.get_word_embedding_dimension
                                pooling_mode_cls_token=False,
                                pooling_mode_max_tokens=False)
 
+# Initialize a SEBRT model
 bi_encoder = SentenceTransformer(modules=[word_embedding_model, pooling_model])
 
 
@@ -115,9 +117,9 @@ evaluator = CECorrelationEvaluator.from_input_examples(dev_samples, name='sts-de
 warmup_steps = math.ceil(len(train_dataloader) * num_epochs * 0.1) #10% of train data for warm-up
 logging.info("Warmup-steps: {}".format(warmup_steps))
 
-# Train the cross-encoder model
-if os.path.exists(cross_encoder_path):
-    cross_encoder=CrossEncoder(cross_encoder_path)
+# Train the cross-encoder model, if a model already exists, use it directly other wise train the 
+if os.path.exists(cross_encoder_path):                  # model we initialize earlier
+    cross_encoder=CrossEncoder(cross_encoder_path)  
 else:
     cross_encoder.fit(train_dataloader=train_dataloader,
             evaluator=evaluator,
@@ -224,6 +226,13 @@ with open(os.path.join(qqp_dataset_path, "classification/test_pairs.tsv"), encod
 evaluator = BinaryClassificationEvaluator(test_sentences1, test_sentences2, test_labels,name='aug_test')
 evaluator(bi_encoder, output_path=bi_encoder_path,epoch=0)
 
+
+
+###############################################################
+#
+# Evaluate SBERT on QQP benchmark dataset without training
+#
+###############################################################
 
 '''
 word_embedding_model = models.Transformer(model_name, max_seq_length=max_seq_length)

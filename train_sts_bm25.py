@@ -102,8 +102,8 @@ with open(task+'/data.tsv', 'rt', encoding='utf8') as fIn:
             gold_samples.append(InputExample(texts=[row['sentence1'], row['sentence2']], label=score))
             gold_samples.append(InputExample(texts=[row['sentence2'], row['sentence1']], label=score))
 
-random.shuffle(gold_samples)
-gold_samples=gold_samples[::2]
+random.shuffle(gold_samples)        # the gold samples's size is twice of original training set
+gold_samples=gold_samples[::2]      # but randomly use half of them
 
 # We wrap gold_samples (which is a List[InputExample]) into a pytorch DataLoader
 train_dataloader = DataLoader(gold_samples, shuffle=True, batch_size=batch_size)
@@ -159,7 +159,6 @@ for t in tokens:
 logging.info("Number of silver pairs generated for "+task+": {}".format(len(silver_data)))
 logging.info("Step 2.2: Label" + task + "(silver dataset) with cross-encoder: {}".format(model_name))
 
-#cross_encoder = CrossEncoder(cross_encoder_path)
 silver_scores = cross_encoder.predict(silver_data)
 
 # All model predictions should be between [0,1]
