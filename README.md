@@ -22,7 +22,7 @@ Chien Vu also wrote a nice blog article on this technique: [Advance BERT model v
 ## Extend to your own datasets
 
 **Scenario 1: Limited or small annotated datasets (few labeled sentence-pairs (1k-3k))**\
-If you have specialized datasets in your company or research which are small-sized or contain labeled few sentence-pairs. You can extend the idea of Augmented SBERT (in-domain) strategy by training a cross-encoder over your small gold  dataset and use BM25 sampling to generate combinations not seen earlier. Use the cross-encoder to label these unlabeled pairs to create the silver dataset. Finally train a bi-encoder (i.e. SBERT) over your extended dataset (gold+silver) dataset as shown in [train_sts_indomain_bm25.py](train_sts_indomain_bm25.py).
+If you have specialized datasets in your company or research which are small-sized or contain labeled few sentence-pairs. You can extend the idea of Augmented SBERT (in-domain) strategy by training a cross-encoder over your small gold  dataset and use BM25 sampling to generate combinations not seen earlier. Use the cross-encoder to label these unlabeled pairs to create the silver dataset. Finally train a bi-encoder (i.e. SBERT) over your extended dataset (gold+silver) dataset as shown in [train_sts_bm25.py](train_sts_bm25.py).
 
 **Scenario 2: No annotated datasets (Only unlabeled sentence-pairs)**\
 If you have specialized datasets in your company or research which only contain unlabeled sentence-pairs. You can extend the idea of Augmented SBERT (domain-transfer) strategy by training a cross-encoder over a source dataset which is annotated (for eg. QQP). Use this cross-encoder to label your specialised unlabeled dataset i.e. target dataset. Finally train a bi-encoder i.e. SBERT over your labeled target dataset as shown in [train_sts_qqp_crossdomain.py](train_sts_qqp_crossdomain.py).
@@ -64,14 +64,14 @@ Training examples for each scenario explained below:
 
 The strategy for bm25 sampling is different from the elasticsearch used in the original paper. Elasticsearch may have timeout as well as other problems, and the code is not intuitive. New strategy is more efficient but maintains accuracy.
 
-- [train_mrpc_indomain_bm25.py](train_mrpc_indomain_bm25.py)
+- [train_mrpc_bm25.py](train_mrpc_bm25.py)
     - Script initially trains a cross-encoder (BERT) model from scratch for small mrpc dataset.
     - Recombine sentences from our small training dataset and form lots of sentence-pairs.
     - Limit number of combinations with BM25 sampling using [FastBM25](https://github.com/zhusleep/fastbm25).
     - Retrieve top-k sentences given a sentence and label these pairs using the cross-encoder (silver dataset).
     - Train a bi-encoder (SBERT) model on both gold + silver STSb dataset. (Augmented SBERT (In-domain) Strategy).
 
-- [train_sts_indomain_bm25.py](train_sts_indomain_bm25.py)
+- [train_sts_bm25.py](train_sts_bm25.py)
     - Script initially trains a cross-encoder (BERT) model from scratch for small STS benchmark dataset.
     - Recombine sentences from our small training dataset to form lots of sentence-pairs.
     - Limit number of combinations with BM25 sampling using [FastBM25](https://github.com/zhusleep/fastbm25).
